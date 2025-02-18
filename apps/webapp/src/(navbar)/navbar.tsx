@@ -11,7 +11,7 @@ export function Navbar() {
         </SignedIn>
 
         <SignedOut>
-          <SignInButton><Button variant={"default"} children={"SignIn"} /></SignInButton>
+          <SignInButton><Button variant={"default"}/></SignInButton>
         </SignedOut>
       </div>
     </div>

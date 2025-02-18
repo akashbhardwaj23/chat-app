@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, KeyboardEvent } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -67,9 +67,7 @@ export default function ChatPage() {
     setNewMessage("")
  }
 
-
-
- const handleKeyDown = (event : any) => {
+ const handleKeyDown = (event : KeyboardEvent<HTMLInputElement>) => {
   console.log(event)
     if(event.key === "Enter"){
       handleSubmit()
@@ -78,8 +76,6 @@ export default function ChatPage() {
 
 
  console.log(chats)
-
-  const [roomName, setRoomName] = useState('')
 
  useEffect(() => {
     if(socket && !loading){
@@ -94,7 +90,7 @@ export default function ChatPage() {
             
         }
     }
- },[loading])
+ },[loading, socket])
 
   console.log("Chats are ", chats)
 
@@ -102,7 +98,7 @@ export default function ChatPage() {
     <div className="flex flex-col bg-gray-100 dark:bg-gray-900">
       <Card className="flex-grow flex flex-col m-4">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">{roomName}</CardTitle>
+          <CardTitle className="text-2xl font-bold">MY ROOM</CardTitle>
         </CardHeader>
         <CardContent className="flex-grow overflow-hidden">
           <ScrollArea className="h-full">
@@ -140,7 +136,7 @@ export default function ChatPage() {
               className="flex-grow"
               onKeyDown={handleKeyDown}
             />
-            <Button type="submit" onClick={handleSubmit} onKeyDown={handleKeyDown}>Send</Button>
+            <Button type="submit" onClick={handleSubmit}>Send</Button>
           </div>
         </CardFooter>
       </Card>

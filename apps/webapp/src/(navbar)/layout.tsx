@@ -8,11 +8,9 @@ export default function Layout({
 }){
     return (
         <body>
-      {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem> */}
         <Navbar />
           <main>{children}</main>
-      {/* </ThemeProvider> */}
-    </body>
+        </body>
     
     )
 }
