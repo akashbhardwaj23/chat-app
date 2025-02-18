@@ -1,0 +1,22 @@
+{
+  "name": "ws",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/ws": "^8.5.14",
+    "db": "*",
+    "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "file:"
+  }
+}
