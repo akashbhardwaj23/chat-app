@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { PlusCircle, Settings, LogOut,Trash2 } from 'lucide-react'
-import { useAuth, useUser } from '@clerk/nextjs'
+import { SignedOut, useAuth, useUser } from '@clerk/nextjs'
 import { getRooms } from '@/server/rooms'
 import axios from 'axios'
 import { BACKEND_URL } from '@/lib/config'
@@ -25,13 +25,13 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState('')
   const router = useRouter()
   const { user } = useUser();
-  const { getToken } = useAuth()
+  const { getToken, signOut } = useAuth()
   
   async function getAllRooms(){
     const token = await getToken()
 
-    // Need to make sure it is not undefined
-    localStorage.setItem("token", token || "")
+    // // Need to make sure it is not undefined
+    // localStorage.setItem("token", token || "")
     const rooms = await getRooms(token || "");
     setRooms(rooms)
   }
@@ -64,7 +64,7 @@ export default function Dashboard() {
           <div className="flex items-center space-x-4 mb-6">
             <Avatar>
               <AvatarImage src={user?.imageUrl} alt={user?.firstName || ""} />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarFallback>{user?.firstName}</AvatarFallback>
             </Avatar>
             <div>
               <h2 className="text-lg font-semibold">{user?.fullName}</h2>
@@ -78,7 +78,7 @@ export default function Dashboard() {
             <Button variant="ghost" className="w-full justify-start">
               <Settings className="mr-2 h-4 w-4" /> Settings
             </Button>
-            <Button variant="ghost" className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900">
+            <Button variant="ghost" className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900" onClick={async () => await signOut()}>
               <LogOut className="mr-2 h-4 w-4" /> Logout
             </Button>
           </nav>
@@ -112,7 +112,6 @@ export default function Dashboard() {
                   <div className="flex justify-between items-center">
                     {/* <span className="text-sm text-gray-500 dark:text-gray-400">{room.participants} participants</span> */}
                     <Button onClick={() => router.push(`/chats/?roomId=${room.id}`)}>Join</Button>
-                     {/* <DeleteIcon className='text-red-800 hover:cursor-pointer' onClick={() => handleDelete(room.id)} /> */}
                      <Trash2 className='text-red-800 hover:cursor-pointer' onClick={() => handleDelete(room.id)} />
                   </div>
                 </CardContent>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,15 +10,17 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { ArrowLeft } from 'lucide-react'
 import axios from 'axios'
 import { BACKEND_URL } from '@/lib/config'
+import { useAuth } from '@clerk/nextjs'
 
 export default function CreateRoom() {
-  const [roomName, setRoomName] = useState('')
-  const [roomDescription, setRoomDescription] = useState('')
-  const router = useRouter()
-  const token = localStorage.getItem("token")
-  if(token === null){
-    router.push("/")
-  }
+  const [roomName, setRoomName] = useState('');
+  const [roomDescription, setRoomDescription] = useState('');
+  const router = useRouter();
+  const { getToken } = useAuth();
+  // const token = localStorage.getItem("token")
+  // if(token === null){
+  //   router.push("/")
+  // }
   // dont use localstora
   // const {socket, loading} = useSocket(token!)
 
@@ -33,6 +35,10 @@ export default function CreateRoom() {
   // }, [loading])
 
   const handleSubmit = async () => {
+    const token = await getToken();
+    if(!token){
+      router.push("/")
+    }
     console.log('Creating room:', { roomName, roomDescription })
     const response = await axios.post(`${BACKEND_URL}/api/v1/create-room`, {
       name : roomName,
