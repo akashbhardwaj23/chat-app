@@ -21,7 +21,7 @@ export function authMiddleware(req : Request, res : Response, next : NextFunctio
         })
         return
     }
-    console.log(decoded.sub)
+    console.log("Decoded sub ",decoded.sub)
 
     //@ts-ignore
     req.userId = decoded.sub;

@@ -32,7 +32,7 @@ model Room {
 
 model ChatMessage {
   id        String     @id   @default(uuid())
-  roomId    String
+  roomId    String     
   userId    String
   message   String   // {json}
   chat      Room   @relation(fields: [roomId], references: [id])

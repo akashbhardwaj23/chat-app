@@ -3,7 +3,7 @@
 import { useState, useEffect, KeyboardEvent } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { redirect, useSearchParams } from 'next/navigation'
 import { useWebSocket } from '@/socket/usewebsocket'
@@ -11,6 +11,7 @@ import { useAuth, useUser } from '@clerk/nextjs'
 import axios from 'axios'
 import { BACKEND_URL } from '@/lib/config'
 import { Messages } from '@/types/type'
+import { toast, Toaster } from "sonner"
 
 
 export default function ChatPage() {
@@ -20,7 +21,8 @@ export default function ChatPage() {
   console.log(roomId)
   const { user } = useUser()
   const [chats, setChats] = useState<Messages[]>([])
-  const [newMessage, setNewMessage] = useState("")
+  const [newMessage, setNewMessage] = useState("");
+  const [totalUser, setTotalUsers] = useState(0)
   const {socket, loading} = useWebSocket();
 
   async function getPreviousChats(){
@@ -51,11 +53,20 @@ export default function ChatPage() {
         type : "join-room",
         roomId,
         userId : user?.id
+      }));
+
+      socket.send(JSON.stringify({
+        type : "room-users",
+        roomId
       }))
     }
   }, [loading])
 
  const handleSubmit = () => {
+  if(newMessage === ""){
+    toast("Write a Message")
+    return
+  }
     socket?.send(JSON.stringify({
       type : "chat",
       roomId,
@@ -87,6 +98,10 @@ export default function ChatPage() {
               console.log(parsedData)
               setChats(prev => [...prev, parsedData.chat])
             }
+
+            if(parsedData.type === "room-users"){
+              setTotalUsers(parsedData.totalUser)
+            }
             
         }
     }
@@ -99,8 +114,9 @@ export default function ChatPage() {
       <Card className="flex-grow flex flex-col m-4">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">MY ROOM</CardTitle>
+          <CardDescription className='text-lg font-semibold'>Users : {totalUser}</CardDescription>
         </CardHeader>
-        <CardContent className="flex-grow overflow-hidden">
+        <CardContent className="flex-grow h-full overflow-hidden">
           <ScrollArea className="h-full">
             {chats.map((chat) => (
               <div
@@ -139,6 +155,7 @@ export default function ChatPage() {
             <Button type="submit" onClick={handleSubmit}>Send</Button>
           </div>
         </CardFooter>
+        <Toaster />
       </Card>
     </div>
   )

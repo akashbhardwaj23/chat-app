@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { PlusCircle, Settings, LogOut } from 'lucide-react'
+import { PlusCircle, Settings, LogOut,Trash2 } from 'lucide-react'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { getRooms } from '@/server/rooms'
+import axios from 'axios'
+import { BACKEND_URL } from '@/lib/config'
 
 
 interface Room{
@@ -41,6 +43,17 @@ export default function Dashboard() {
   const filteredRooms = rooms.filter(room => 
     room.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const handleDelete = async (roomId : number) => {
+    const token = await getToken()
+    const response = await axios.get(`${BACKEND_URL}/api/v1/delete-room/${roomId}`, {
+      headers : {
+        Authorization : `Bearer ${token}`
+      }
+    })
+    console.log(response)
+    getAllRooms()
+  }
 
 
   console.log(filteredRooms)
@@ -95,10 +108,12 @@ export default function Dashboard() {
                   <CardTitle>{room.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{room.description}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{room.description}</p>
                   <div className="flex justify-between items-center">
                     {/* <span className="text-sm text-gray-500 dark:text-gray-400">{room.participants} participants</span> */}
                     <Button onClick={() => router.push(`/chats/?roomId=${room.id}`)}>Join</Button>
+                     {/* <DeleteIcon className='text-red-800 hover:cursor-pointer' onClick={() => handleDelete(room.id)} /> */}
+                     <Trash2 className='text-red-800 hover:cursor-pointer' onClick={() => handleDelete(room.id)} />
                   </div>
                 </CardContent>
               </Card>

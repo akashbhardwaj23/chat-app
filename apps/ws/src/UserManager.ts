@@ -109,6 +109,7 @@ export class UserManager {
                         message : {
                             userId : message.userId,
                             content : message.content,
+                            participant : room.users.length
                         },
                         createdAt: chatMessage.createdAt
                     }
@@ -125,11 +126,29 @@ export class UserManager {
                         message : {
                             userId : message.userId,
                             content : message.content,
+                            participant : room.users.length
                         },
                         createdAt : chatMessage.createdAt
                     }
                 }))
             }
+        })
+    }
+
+    public getUserLength(roomId : string){
+        const room = this.rooms.get(roomId);
+        if(!room){
+            console.log("No room")
+            return;
+        }
+
+        const userLength = room.users.length;
+
+        room.users.map((x) => {
+            x.socket.send(JSON.stringify({
+                type : "room-users",
+                totalUser: userLength
+            }))
         })
     }
 

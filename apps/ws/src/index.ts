@@ -56,6 +56,10 @@ wss.on("connection", (ws, req) => {
             userManager.sendMessage(parsedData.roomId, parsedData.message);
         }
 
+        if(parsedData.type === "room-users"){
+            userManager.getUserLength(parsedData.roomId)
+        }
+
         if(parsedData.type === "leave-room"){
             userManager.leaveRoom(parsedData.roomId, parsedData.userId);
         }
