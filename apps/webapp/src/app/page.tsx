@@ -1,12 +1,20 @@
-
-import { Button } from "@/components/ui/button"
+import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 
-export default function Home() {
+export default async function Home() {
+
+  const { userId } = await auth();
+
+  if(userId){
+    redirect("/dashboard")
+  }
+
   return (
-    <div className="flex justify-center items-center w-full h-full">
-      Welcome to Chats App
-      <Button onClick={redirect("/dashboard")}>Go To DashBoard</Button>
+    <div className="flex flex-col justify-center items-center w-full h-full">
+     <div className="flex justify-center items-center mb-8">
+        Welcome to Chats App
+     </div>
+      <span className="items-center">Please Sign In to Access The Application</span>
     </div>
   )
   

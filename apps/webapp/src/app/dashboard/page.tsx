@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { PlusCircle, Settings, LogOut,Trash2 } from 'lucide-react'
-import { SignedOut, useAuth, useUser } from '@clerk/nextjs'
+import { PlusCircle, Settings, LogOut,Trash2, Loader2 } from 'lucide-react'
+import { SignedOut, useAuth, useSignIn, useUser } from '@clerk/nextjs'
 import { getRooms } from '@/server/rooms'
 import axios from 'axios'
 import { BACKEND_URL } from '@/lib/config'
+import { Spinner } from '@/components/ui/spinner'
 
 
 interface Room{
@@ -23,7 +24,8 @@ interface Room{
 export default function Dashboard() {
   const [rooms, setRooms] = useState<Room[]>([])
   const [searchQuery, setSearchQuery] = useState('')
-  const router = useRouter()
+  const router = useRouter();
+  const { isLoaded } = useSignIn()
   const { user } = useUser();
   const { getToken, signOut } = useAuth()
   
@@ -56,7 +58,14 @@ export default function Dashboard() {
   }
 
 
-  console.log(filteredRooms)
+  console.log(filteredRooms);
+
+  if(!isLoaded){
+    return <div className='flex h-screen items-center justify-center'>
+      <Spinner />
+    </div>
+  }
+
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
