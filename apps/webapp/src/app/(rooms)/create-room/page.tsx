@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
+import { Button } from "@repo/ui/button"
+import { Input } from "@repo/ui/input"
+import { Textarea } from "@repo/ui/textarea"
+import { Label } from "@repo/ui/label"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@repo/ui/card"
 import { ArrowLeft } from 'lucide-react'
 import axios from 'axios'
-import { BACKEND_URL } from '@/lib/config'
+import { BACKEND_URL } from 'common/config'
 import { useAuth } from '@clerk/nextjs'
 
 export default function CreateRoom() {
@@ -59,7 +59,7 @@ export default function CreateRoom() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+    <div className="flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <div className="flex items-center">
@@ -70,7 +70,7 @@ export default function CreateRoom() {
           </div>
         </CardHeader>
         <div>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 font-convergence">
             <div className="space-y-2">
               <Label htmlFor="roomName">Room Name</Label>
               <Input
@@ -93,7 +93,7 @@ export default function CreateRoom() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full" onClick={handleSubmit}>Create Room</Button>
+            <Button className="w-full" variant={"room"} onClick={handleSubmit}>Create Room</Button>
           </CardFooter>
         </div>
       </Card>

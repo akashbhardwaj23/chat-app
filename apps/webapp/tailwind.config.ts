@@ -51,6 +51,14 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
+		fontFamily : {
+			poppins : ["Poppins", 'sans-serif'],
+			convergence : ["Convergence", 'sans-serif']
+		},
+		borderColor : {
+			background : 'hsl(var(--background))',
+			foreground : 'hsl(var(--foreground))'
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

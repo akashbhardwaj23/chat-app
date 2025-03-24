@@ -1,4 +1,4 @@
-import { WebSocketProvider } from "@/socket/usewebsocket";
+import { WebSocketProvider } from "@/hooks/socket/usewebsocket";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 

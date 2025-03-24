@@ -1,6 +1,5 @@
 
-
-import { BACKEND_URL } from "@/lib/config"
+import { BACKEND_URL } from "common/config"
 import axios from "axios"
 
 export async function getRooms(token : string){

@@ -1,6 +1,7 @@
 "use client"
 
-import { WS_URL } from "@/lib/config";
+
+import { WS_URL } from "common/config";
 import { createContext, useContext, useEffect, useState } from "react"
 
 

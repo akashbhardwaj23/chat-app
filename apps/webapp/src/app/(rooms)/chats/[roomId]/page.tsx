@@ -1,15 +1,15 @@
 'use client'
 
 import { useState, useEffect, KeyboardEvent } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@repo/ui/button"
+import { Input } from "@repo/ui/input"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@repo/ui/card"
+import { ScrollArea } from "@repo/ui/scroll-area"
 import { redirect, useSearchParams } from 'next/navigation'
-import { useWebSocket } from '@/socket/usewebsocket'
+import { useWebSocket } from '@/hooks/socket/usewebsocket'
 import { useAuth, useUser } from '@clerk/nextjs'
 import axios from 'axios'
-import { BACKEND_URL } from '@/lib/config'
+import { BACKEND_URL } from 'common/config'
 import { Messages } from '@/types/type'
 import { toast, Toaster } from "sonner"
 

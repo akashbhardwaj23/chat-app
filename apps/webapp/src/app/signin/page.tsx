@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@repo/ui/button"
+import { Input } from "@repo/ui/input"
+import { Label } from "@repo/ui/label"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@repo/ui/card"
 
 export default function SignInPage() {
   const [email, setEmail] = useState('')

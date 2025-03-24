@@ -5,7 +5,13 @@
   "exports": {
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./avatar": "./src/avatar.tsx",
+    "./dropdown-menu": "./src/dropdown-menu.tsx",
+    "./input": "./src/input.tsx",
+    "./label": "./src/label.tsx",
+    "./scroll-area": "./src/scroll-area.tsx",
+    "./spinner": "./src/spinner.tsx",
+    "./textarea": "./src/textarea.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -23,6 +29,9 @@
     "typescript": "5.7.3"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "lucide-react": "^0.483.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
